@@ -1,0 +1,79 @@
+# .gitignore for .NET projects
+# Build results
+[Bb]in/
+[Oo]bj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Mono Auto Generated Files
+mono_crash.*
+
+# Windows image file caches
+Thumbs.db
+*.DS_Store
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# DotCover
+*.dotCover
+
+# NCrunch
+*.ncrunch*
+.*crunch*.local.xml
+
+# Visual Studio Code
+.vscode/
+
+# Rider
+.idea/
+*.sln.iml
+
+# Logs
+*.log
+
+# Others
+*.vspscc
+*.vssscc
+*.dbmdl
+*.pdb
+*.cache
+*.bak
+*.swp
+*.tmp
+*.vs/
+_ReSharper*/
+
+# NuGet
+*.nupkg
+# The packages folder can be ignored because of Package Restore
+**/packages/*
+!**/packages/build/
+!**/packages/repositories.config
+
+# Azure Pipelines
+*.azure-pipelines.yml
+
+# Local history for Visual Studio
+.localhistory/
+
+# Dotnet watch
+**/node_modules/
+
+# Test results
+TestResults/
+
+# Publish outputs
+publish/
+
+# Coverage results
+coverage/
+
+#db
+*.db
+*.db-shm
+*.db-wal
