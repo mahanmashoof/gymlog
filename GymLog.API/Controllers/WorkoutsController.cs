@@ -1,3 +1,4 @@
+using GymLog.API.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GymLog.API.Controllers;
@@ -6,9 +7,14 @@ namespace GymLog.API.Controllers;
 [Route("[controller]")]
 public class WorkoutsController : ControllerBase
 {
+    private static readonly List<Workout> _workouts = [];
     [HttpGet]
-    public IActionResult GetAll()
+    public IActionResult GetAll() => Ok(_workouts);
+
+    [HttpPost]
+    public IActionResult Create(Workout workout)
     {
-        return Ok("GymLog is alive 🏋️");
+        _workouts.Add(workout);
+        return CreatedAtAction(nameof(GetAll), new { id = workout.Id }, workout);
     }
 }
