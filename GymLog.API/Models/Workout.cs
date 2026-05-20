@@ -6,4 +6,5 @@ public class Workout
     public string Name { get; set; } = string.Empty;
     public DateTime Date { get; set; } = DateTime.UtcNow;
     public string Notes { get; set; } = string.Empty;
+    public List<WorkoutExercise> WorkoutExercises { get; set; } = new();
 }

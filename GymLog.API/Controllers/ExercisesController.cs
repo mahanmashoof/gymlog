@@ -32,27 +32,9 @@ public class ExercisesController : ControllerBase
     [HttpPost]
     public IActionResult Create(Exercise exercise)
     {
-        var workout = _db.Workouts.FirstOrDefault(w => w.Id == exercise.WorkoutId);
-        if (workout is null) return BadRequest("Workout not found.");
-
         _db.Exercises.Add(exercise);
         _db.SaveChanges();
         return CreatedAtAction(nameof(GetById), new { id = exercise.Id }, exercise);
-    }
-
-    [HttpPut("{id}")]
-    public IActionResult Update(Guid id, Exercise updated)
-    {
-        var exercise = _db.Exercises.FirstOrDefault(e => e.Id == id);
-        if (exercise is null) return NotFound();
-
-        exercise.Name = updated.Name;
-        exercise.Sets = updated.Sets;
-        exercise.Reps = updated.Reps;
-        exercise.WeightKg = updated.WeightKg;
-
-        _db.SaveChanges();
-        return Ok(exercise);
     }
 
     [HttpDelete("{id}")]
