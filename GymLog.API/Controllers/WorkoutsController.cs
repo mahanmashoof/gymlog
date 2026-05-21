@@ -66,4 +66,50 @@ public class WorkoutsController : ControllerBase
         _db.SaveChanges();
         return NoContent();
     }
+
+    [HttpGet("search")]
+    public IActionResult Search(
+    [FromQuery] string? name,
+    [FromQuery] DateTime? from,
+    [FromQuery] DateTime? to)
+    {
+        var query = _db.Workouts
+            .Include(w => w.WorkoutExercises)
+            .AsQueryable();
+
+        if (!string.IsNullOrEmpty(name))
+            query = query.Where(w => w.Name.Contains(name));
+
+        if (from.HasValue)
+            query = query.Where(w => w.Date >= from.Value);
+
+        if (to.HasValue)
+            query = query.Where(w => w.Date <= to.Value);
+
+        var results = query.ToList();
+        return Ok(results);
+    }
+
+    [HttpGet("by-exercise/{exerciseId}")]
+    public IActionResult GetByExercise(Guid exerciseId)
+    {
+        var workouts = _db.Workouts
+            .Include(w => w.WorkoutExercises)
+            .Where(w => w.WorkoutExercises.Any(we => we.ExerciseId == exerciseId))
+            .ToList();
+
+        return Ok(workouts);
+    }
+
+    [HttpGet("recent")]
+    public IActionResult GetRecent([FromQuery] int count = 5)
+    {
+        var workouts = _db.Workouts
+            .Include(w => w.WorkoutExercises)
+            .OrderByDescending(w => w.Date)
+            .Take(count)
+            .ToList();
+
+        return Ok(workouts);
+    }
 }

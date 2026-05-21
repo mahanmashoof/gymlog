@@ -67,4 +67,14 @@ public class WorkoutExercisesController : ControllerBase
         _db.SaveChanges();
         return NoContent();
     }
+
+    [HttpGet("by-workout/{workoutId}")]
+    public IActionResult GetByWorkout(Guid workoutId)
+    {
+        var entries = _db.WorkoutExercises
+            .Where(we => we.WorkoutId == workoutId)
+            .ToList();
+
+        return Ok(entries);
+    }
 }
