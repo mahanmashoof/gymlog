@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using GymLog.API.Data;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using GymLog.API.Validators;
+using GymLog.API.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +15,10 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=gymlog.db"));
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddScoped<IValidator<Workout>, WorkoutValidator>();
+builder.Services.AddScoped<IValidator<Exercise>, ExerciseValidator>();
+builder.Services.AddScoped<IValidator<WorkoutExercise>, WorkoutExerciseValidator>();
 
 var app = builder.Build();
 
