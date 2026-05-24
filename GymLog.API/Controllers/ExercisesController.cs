@@ -6,7 +6,7 @@ namespace GymLog.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ExercisesController : ControllerBase
+public class ExercisesController : BaseController
 {
     private readonly AppDbContext _db;
 
@@ -26,7 +26,7 @@ public class ExercisesController : ControllerBase
     public IActionResult GetById(Guid id)
     {
         var exercise = _db.Exercises.FirstOrDefault(e => e.Id == id);
-        return exercise is null ? NotFound() : Ok(exercise);
+        return exercise is null ? NotFoundResponse($"Exercise with ID {id} was not found.") : Ok(exercise);
     }
 
     [HttpPost]
@@ -41,7 +41,7 @@ public class ExercisesController : ControllerBase
     public IActionResult Delete(Guid id)
     {
         var exercise = _db.Exercises.FirstOrDefault(e => e.Id == id);
-        if (exercise is null) return NotFound();
+        if (exercise is null) return NotFoundResponse($"Exercise with ID {id} was not found.");
 
         _db.Exercises.Remove(exercise);
         _db.SaveChanges();

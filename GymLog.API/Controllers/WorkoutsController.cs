@@ -7,7 +7,7 @@ namespace GymLog.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class WorkoutsController : ControllerBase
+public class WorkoutsController : BaseController
 {
     private readonly AppDbContext _db;
 
@@ -31,7 +31,7 @@ public class WorkoutsController : ControllerBase
         var workout = _db.Workouts
             .Include(w => w.WorkoutExercises)
             .FirstOrDefault(w => w.Id == id);
-        return workout is null ? NotFound() : Ok(workout);
+        return workout is null ? NotFoundResponse($"Workout with ID {id} was not found.") : Ok(workout);
     }
 
     [HttpPost]
@@ -46,7 +46,7 @@ public class WorkoutsController : ControllerBase
     public IActionResult Update(Guid id, Workout updated)
     {
         var workout = _db.Workouts.FirstOrDefault(w => w.Id == id);
-        if (workout is null) return NotFound();
+        if (workout is null) return NotFoundResponse($"Workout with ID {id} was not found.");
 
         workout.Name = updated.Name;
         workout.Date = updated.Date;
@@ -60,7 +60,7 @@ public class WorkoutsController : ControllerBase
     public IActionResult Delete(Guid id)
     {
         var workout = _db.Workouts.FirstOrDefault(w => w.Id == id);
-        if (workout is null) return NotFound();
+        if (workout is null) return NotFoundResponse($"Workout with ID {id} was not found.");
 
         _db.Workouts.Remove(workout);
         _db.SaveChanges();

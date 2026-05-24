@@ -6,7 +6,7 @@ namespace GymLog.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class WorkoutExercisesController : ControllerBase
+public class WorkoutExercisesController : BaseController
 {
     private readonly AppDbContext _db;
 
@@ -26,17 +26,17 @@ public class WorkoutExercisesController : ControllerBase
     public IActionResult GetById(Guid id)
     {
         var entry = _db.WorkoutExercises.FirstOrDefault(we => we.Id == id);
-        return entry is null ? NotFound() : Ok(entry);
+        return entry is null ? NotFoundResponse($"Entry with ID {id} was not found.") : Ok(entry);
     }
 
     [HttpPost]
     public IActionResult Create(WorkoutExercise entry)
     {
         var workout = _db.Workouts.FirstOrDefault(w => w.Id == entry.WorkoutId);
-        if (workout is null) return BadRequest("Workout not found.");
+        if (workout is null) return BadRequestResponse($"Workout with ID {entry.WorkoutId} was not found.");
 
         var exercise = _db.Exercises.FirstOrDefault(e => e.Id == entry.ExerciseId);
-        if (exercise is null) return BadRequest("Exercise not found.");
+        if (exercise is null) return BadRequestResponse($"Exercise with ID {entry.ExerciseId} was not found.");
 
         _db.WorkoutExercises.Add(entry);
         _db.SaveChanges();
@@ -47,7 +47,7 @@ public class WorkoutExercisesController : ControllerBase
     public IActionResult Update(Guid id, WorkoutExercise updated)
     {
         var entry = _db.WorkoutExercises.FirstOrDefault(we => we.Id == id);
-        if (entry is null) return NotFound();
+        if (entry is null) return NotFoundResponse($"Entry with ID {id} was not found.");
 
         entry.Sets = updated.Sets;
         entry.Reps = updated.Reps;
@@ -61,7 +61,7 @@ public class WorkoutExercisesController : ControllerBase
     public IActionResult Delete(Guid id)
     {
         var entry = _db.WorkoutExercises.FirstOrDefault(we => we.Id == id);
-        if (entry is null) return NotFound();
+        if (entry is null) return NotFoundResponse($"Entry with ID {id} was not found.");
 
         _db.WorkoutExercises.Remove(entry);
         _db.SaveChanges();
