@@ -1,6 +1,6 @@
 import { Exercise, Workout, WorkoutExercise } from "./types";
 
-const BASE_URL = process.env.NEXT_PUBLIC_LOCAL_API_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // ── Workouts ──────────────────────────────────────────
 
