@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { getWorkout, getExercises } from "@/lib/api";
 import { notFound } from "next/navigation";
-import LogExerciseForm from "@/components/LogExerciseForm";
-import WorkoutExerciseList from "@/components/WorkoutExerciseList";
+import WorkoutExerciseSection from "@/components/WorkoutExerciseSection";
+import DeleteWorkoutButton from "@/components/DeleteWorkoutButton";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -40,6 +40,15 @@ export default async function WorkoutDetailPage({ params }: Props) {
             })}
           </p>
         </div>
+        <div className="flex gap-2">
+          <Link
+            href={`/workouts/${id}/edit`}
+            className="border px-4 py-2 rounded text-sm hover:bg-gray-50"
+          >
+            Edit
+          </Link>
+          <DeleteWorkoutButton id={id} />
+        </div>
       </div>
 
       {workout.notes && (
@@ -48,19 +57,12 @@ export default async function WorkoutDetailPage({ params }: Props) {
         </div>
       )}
 
-      <div className="mb-4">
-        <h2 className="text-lg font-semibold mb-4">Exercises</h2>
-        <WorkoutExerciseList
-          initialEntries={workout.workoutExercises}
-          exerciseMap={exerciseMap}
-          workoutId={id}
-        />
-      </div>
-
-      <div className="mt-8">
-        <h2 className="text-lg font-semibold mb-4">Log an Exercise</h2>
-        <LogExerciseForm workoutId={id} exercises={exercises} />
-      </div>
+      <WorkoutExerciseSection
+        initialEntries={workout.workoutExercises}
+        exerciseMap={exerciseMap}
+        exercises={exercises}
+        workoutId={id}
+      />
     </div>
   );
 }

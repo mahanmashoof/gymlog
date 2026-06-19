@@ -1,27 +1,26 @@
 "use client";
 
-import { useState } from "react";
 import { WorkoutExercise } from "@/lib/types";
 import { deleteWorkoutExercise } from "@/lib/api";
+import { useState } from "react";
 
 interface Props {
-  initialEntries: WorkoutExercise[];
+  entries: WorkoutExercise[];
   exerciseMap: Record<string, string>;
-  workoutId: string;
+  onDeleted: (id: string) => void;
 }
 
 export default function WorkoutExerciseList({
-  initialEntries,
+  entries,
   exerciseMap,
-  workoutId,
+  onDeleted,
 }: Props) {
-  const [entries, setEntries] = useState(initialEntries);
   const [error, setError] = useState("");
 
   async function handleDelete(id: string) {
     try {
       await deleteWorkoutExercise(id);
-      setEntries(entries.filter((e) => e.id !== id));
+      onDeleted(id);
     } catch {
       setError("Failed to remove exercise.");
     }

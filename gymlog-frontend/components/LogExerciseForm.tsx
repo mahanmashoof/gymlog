@@ -38,7 +38,6 @@ export default function LogExerciseForm({
         weightKg,
       });
       onLogged?.(entry);
-      setSuccess("Exercise logged! Refresh to see it above.");
     } catch {
       setError("Failed to log exercise. Please try again.");
     } finally {
