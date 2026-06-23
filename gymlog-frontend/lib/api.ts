@@ -4,8 +4,20 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // ── Workouts ──────────────────────────────────────────
 
-export async function getWorkouts(): Promise<Workout[]> {
-  const res = await fetch(`${BASE_URL}/workouts`);
+export async function getWorkouts(filters?: {
+  name?: string;
+  from?: string;
+  to?: string;
+}): Promise<Workout[]> {
+  const params = new URLSearchParams();
+  if (filters?.name) params.set("name", filters.name);
+  if (filters?.from) params.set("from", filters.from);
+  if (filters?.to) params.set("to", filters.to);
+
+  const query = params.toString();
+  const url = `${BASE_URL}/workouts/search${query ? `?${query}` : ""}`;
+
+  const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) throw new Error("Failed to fetch workouts");
   return res.json();
 }
