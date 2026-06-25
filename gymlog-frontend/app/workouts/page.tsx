@@ -41,12 +41,14 @@ export default async function WorkoutsPage({ searchParams }: Props) {
               <Link
                 key={workout.id}
                 href={`/workouts/${workout.id}`}
-                className="bg-white border rounded-lg p-4 hover:shadow-md transition-shadow"
+                className="group bg-white border rounded-lg p-4 hover:shadow-md hover:border-gray-300 transition-all"
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <h2 className="font-semibold text-lg">{workout.name}</h2>
-                    <p className="text-gray-500 text-sm">
+                    <h2 className="font-semibold text-lg group-hover:text-black">
+                      {workout.name}
+                    </h2>
+                    <p className="text-gray-500 text-sm mt-0.5">
                       {new Date(workout.date).toLocaleDateString("en-SE", {
                         year: "numeric",
                         month: "long",
@@ -54,13 +56,22 @@ export default async function WorkoutsPage({ searchParams }: Props) {
                       })}
                     </p>
                   </div>
-                  <div className="text-gray-400 text-sm">
-                    {workout.workoutExercises.length} exercise
-                    {workout.workoutExercises.length !== 1 ? "s" : ""}
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+                      {workout.workoutExercises.length}{" "}
+                      {workout.workoutExercises.length !== 1
+                        ? "exercises"
+                        : "exercise"}
+                    </span>
+                    <span className="text-gray-300 group-hover:text-gray-500">
+                      →
+                    </span>
                   </div>
                 </div>
                 {workout.notes && (
-                  <p className="text-gray-500 text-sm mt-2">{workout.notes}</p>
+                  <p className="text-gray-400 text-sm mt-2 truncate">
+                    {workout.notes}
+                  </p>
                 )}
               </Link>
             ))}

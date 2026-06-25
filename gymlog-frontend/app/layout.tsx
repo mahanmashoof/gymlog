@@ -15,16 +15,24 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-gray-50 text-gray-900">
-        <nav className="bg-white border-b px-8 py-4 flex items-center gap-6">
-          <Link href="/" className="text-xl font-bold">
+        <nav className="bg-white border-b px-8 py-4 flex items-center gap-8 sticky top-0 z-10">
+          <Link href="/" className="text-lg font-bold tracking-tight">
             GymLog 🏋️
           </Link>
-          <Link href="/workouts" className="text-gray-600 hover:text-black">
-            Workouts
-          </Link>
-          <Link href="/exercises" className="text-gray-600 hover:text-black">
-            Exercises
-          </Link>
+          <div className="flex gap-6">
+            <Link
+              href="/workouts"
+              className="text-sm text-gray-600 hover:text-black transition-colors"
+            >
+              Workouts
+            </Link>
+            <Link
+              href="/exercises"
+              className="text-sm text-gray-600 hover:text-black transition-colors"
+            >
+              Exercises
+            </Link>
+          </div>
         </nav>
         <main className="max-w-4xl mx-auto px-8 py-8">{children}</main>
       </body>
