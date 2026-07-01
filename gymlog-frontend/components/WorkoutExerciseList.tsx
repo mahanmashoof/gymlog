@@ -39,7 +39,7 @@ export default function WorkoutExerciseList({
           className="bg-white border rounded-lg px-4 py-3 flex items-center justify-between hover:border-gray-300 transition-colors"
         >
           <div className="flex items-center gap-4">
-            <div className="bg-gray-100 rounded-lg p-2 text-center min-w-[48px]">
+            <div className="bg-gray-100 rounded-lg p-2 text-center min-w-12">
               <p className="text-xs text-gray-500">sets</p>
               <p className="font-bold text-lg leading-none">{entry.sets}</p>
             </div>
