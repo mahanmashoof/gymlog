@@ -2,11 +2,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GymLog.API.Data;
 using GymLog.API.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GymLog.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize]
 public class WorkoutsController : BaseController
 {
     private readonly AppDbContext _db;

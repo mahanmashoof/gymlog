@@ -13,6 +13,8 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
         modelBuilder.Entity<WorkoutExercise>()
             .HasOne<Workout>()
             .WithMany(w => w.WorkoutExercises)
